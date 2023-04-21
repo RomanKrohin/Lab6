@@ -60,4 +60,5 @@ class Reader : WorkWithTokenizator, WorkWithChooseCommand, WorkWithHistory {
             history.add(coomand[0])
         }
     }
+
 }
