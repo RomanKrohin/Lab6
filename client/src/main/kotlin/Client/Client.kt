@@ -52,7 +52,6 @@ class Client : WorkWithPrinter, WorkWithAsker {
             task.studyGroup = asker.askStudyGroup()
             handlerOfOutputStream(task)
         } else {
-            println(answer.getAnswer())
             printer.print(answer)
         }
         objectInputStream.close()
