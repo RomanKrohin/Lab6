@@ -13,6 +13,9 @@ data class Answer(
     var nameError: String = "Command do not exist",
     var result: String = "Command exception: ",
 ): Serializable {
+
+    val listOfNewCommand= mutableListOf<String>()
+
     init {
         if (checkError) {
             result += nameError
@@ -36,5 +39,9 @@ data class Answer(
      */
     fun getAnswer(): String {
         return result
+    }
+
+    fun setNewCommands(list: List<String>){
+        listOfNewCommand.addAll(list)
     }
 }

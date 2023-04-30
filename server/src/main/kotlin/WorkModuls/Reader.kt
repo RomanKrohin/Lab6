@@ -28,13 +28,14 @@ class Reader : WorkWithTokenizator, WorkWithChooseCommand, WorkWithHistory {
         path: String,
         command: MutableList<String>,
         task: Task,
+        listOfOldCommand: MutableList<String>
     ): Answer {
         logger.log(Level.INFO, "Чтение команды")
         val tokens = createTokenizator()
         val chooseCommand = createChooseCommand(collection, history, pathsForExecuteScripts, path, task)
         workWithArrayHistory(command)
         val commandComponents = tokens.tokenizateCommand(command, path, history)
-        val answer = chooseCommand.chooseCoomand(commandComponents)
+        val answer = chooseCommand.chooseCoomand(commandComponents, listOfOldCommand)
         return answer
     }
 

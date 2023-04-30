@@ -12,6 +12,7 @@ import java.io.ObjectOutputStream
 import java.net.InetSocketAddress
 import java.nio.channels.ServerSocketChannel
 import java.nio.channels.SocketChannel
+import java.sql.Connection
 import java.util.Scanner
 import java.util.logging.Level
 import java.util.logging.Logger
@@ -26,7 +27,7 @@ class Server() : WorkWithReader {
         logger.log(Level.INFO, "Ожидание подключения")
         try {
             val serverSocketChannel = ServerSocketChannel.open()
-            serverSocketChannel.bind(InetSocketAddress("localhost", 1234))
+            serverSocketChannel.bind(InetSocketAddress("localhost", 8000))
             val br= BufferedReader(InputStreamReader(System.`in`))
             while (serverSocketChannel != null) {
                     if (br.ready()) {
@@ -50,10 +51,9 @@ class Server() : WorkWithReader {
     fun handlerOfInput(clientSocketChannel: SocketChannel, collection: Collection<String, StudyGroup>, path: String) {
         logger.log(Level.INFO, "Получение информации")
         try {
-
             val objectInputStream = ObjectInputStream(clientSocketChannel.socket().getInputStream())
             val task = objectInputStream.readObject() as Task
-            handlerOfOutput(clientSocketChannel, reader.reader(collection, path, task.describe, task))
+            handlerOfOutput(clientSocketChannel, reader.reader(collection, path, task.describe, task, task.listOfCommands))
             objectInputStream.close()
         } catch (e: Exception) {
             logger.log(Level.SEVERE, "Ошибка получения информации")

@@ -6,6 +6,7 @@ import StudyGroupInformation.StudyGroup
 import java.nio.channels.SocketChannel
 import java.util.logging.Level
 import java.util.logging.Logger
+import java.util.stream.Collectors
 
 /**
  * Класс управления командами
@@ -19,15 +20,15 @@ class ChooseCommand(
     history: MutableList<String>,
     pathsForExecuteScripts: MutableList<String>,
     pathOfFile: String,
-    task: Task
+    task: Task,
 ) : CreateCommand, WorkWithAnswer, WorkWithCommandExceptionAnswer {
     private val listOfPaths = pathsForExecuteScripts
     private var listOfCommand = createCommands(collection, history, listOfPaths, pathOfFile, task)
     private val workHistory = history
     private val workCollection = collection
     private val workPath = pathOfFile
-    private val workTask= task
-    private val logger= Logger.getLogger("logger")
+    private val workTask = task
+    private val logger = Logger.getLogger("logger")
 
 
     /**
@@ -37,7 +38,7 @@ class ChooseCommand(
      * @param pathsForExecuteScripts
      * @param pathOfFile
      */
-    fun chooseCoomand(commandComponent: MutableList<String>): Answer {
+    fun chooseCoomand(commandComponent: MutableList<String>, listOfOldCommands: MutableList<String>): Answer {
         logger.log(Level.INFO, "Выборка команды")
         commandComponent[0].lowercase()
         if (commandComponent[0] == "execute_script") {
@@ -46,6 +47,8 @@ class ChooseCommand(
         }
         val command = listOfCommand[commandComponent[0]]?.let {
             val answer = it.commandDo(commandComponent[1])
+            answer.setNewCommands(
+                listOfCommand.keys.stream().collect(Collectors.toList()).filter { !listOfOldCommands.contains(it) })
             return answer
         }
         return createCommandExceptionAnswer(commandComponent[0])
@@ -56,7 +59,7 @@ class ChooseCommand(
         history: MutableList<String>,
         pathsForExecuteScripts: MutableList<String>,
         pathOfFile: String,
-        task: Task
+        task: Task,
     ): Map<String, Command> {
         return mapOf<String, Command>(
             "show" to CommandShow(collection),

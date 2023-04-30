@@ -40,7 +40,7 @@ tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
     kotlinOptions.jvmTarget = "17"
 }
 tasks.withType<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar> {
-    archiveFileName.set("/home/roman/App/App.jar")
+    archiveFileName.set("/home/roman/Server.jar")
 }
 tasks.withType<Test> {
     useJUnitPlatform()

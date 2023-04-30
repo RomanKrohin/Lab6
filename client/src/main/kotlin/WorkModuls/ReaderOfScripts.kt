@@ -5,6 +5,8 @@ import java.io.FileReader
 
 class ReaderOfScripts : CreateTask {
 
+
+
     fun readScript(
         path: String,
         printer: Printer,

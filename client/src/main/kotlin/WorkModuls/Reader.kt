@@ -7,6 +7,8 @@ import Client.Client
  */
 class Reader : WorkWithAsker, WorkWithPrinter, WorkWithTokenizator, CreateClient, CreateTask, WorkWithSriptReader {
 
+    val listOfCommands= mutableListOf("show", "info", "help", "history", "save", "clear", "exit")
+
     /**
      * Класс для чтения, выборки и вывода результатов команд
      * @param collection
@@ -24,13 +26,23 @@ class Reader : WorkWithAsker, WorkWithPrinter, WorkWithTokenizator, CreateClient
                 val listOfTasks =
                     readerOfScripts.readScript(commandComponents[1], createPrinter(), tokens, mutableListOf())
                 for (i in listOfTasks) {
-                    println(i.describe)
                     client.handlerOfOutputStream(i)
                 }
             } else {
-                client.handlerOfOutputStream(createTask(commandComponents))
+                if (listOfCommands.contains(commandComponents[0])){
+                    client.handlerOfOutputStream(createTask(commandComponents))
+                    setNewCommands(client.returnNewCommands())
+                    client.resetNewCommands()
+                }
+                else{
+                    println("Command ${commandComponents[0]} does not exist")
+                }
             }
         }
+    }
+
+    fun setNewCommands(list: List<String>){
+        listOfCommands.addAll(list)
     }
 
     override fun createAsker(): Asker {
@@ -50,7 +62,7 @@ class Reader : WorkWithAsker, WorkWithPrinter, WorkWithTokenizator, CreateClient
     }
 
     override fun createTask(describe: MutableList<String>): Task {
-        return Task(describe)
+        return Task(describe, listOfCommands = listOfCommands)
     }
 
     override fun createScriptReader(): ReaderOfScripts {

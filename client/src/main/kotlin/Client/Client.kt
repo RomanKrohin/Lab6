@@ -9,14 +9,19 @@ import kotlin.system.exitProcess
 
 class Client : WorkWithPrinter, WorkWithAsker {
 
+    val listOfNewCommands= mutableListOf<String>()
+
     fun startConnection(): SocketChannel {
+
         val printer = createPrinter()
         return try {
-            val clientSocket = SocketChannel.open(InetSocketAddress("localhost", 1234))
+            val clientSocket = SocketChannel.open()
+            clientSocket.socket().connect(InetSocketAddress("localhost", 8000))
             clientSocket
         } catch (e: Exception) {
             printer.printHint("Bad connection")
             SocketChannel.open(InetSocketAddress("localhost", 8000))
+            throw e
         }
     }
 
@@ -52,12 +57,20 @@ class Client : WorkWithPrinter, WorkWithAsker {
             task.studyGroup = asker.askStudyGroup()
             handlerOfOutputStream(task)
         } else {
+            listOfNewCommands.addAll(answer.listOfNewCommand)
             printer.print(answer)
         }
         objectInputStream.close()
         clientSocket.close()
     }
 
+    fun returnNewCommands(): MutableList<String>{
+        return listOfNewCommands
+    }
+
+    fun resetNewCommands(){
+        listOfNewCommands.clear()
+    }
     override fun createPrinter(): Printer {
         return Printer()
     }
