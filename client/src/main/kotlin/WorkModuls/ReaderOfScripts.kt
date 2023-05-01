@@ -3,13 +3,9 @@ package WorkModuls
 import java.io.BufferedReader
 import java.io.FileReader
 
-class ReaderOfScripts : CreateTask {
-
-
-
+class ReaderOfScripts{
     fun readScript(
         path: String,
-        printer: Printer,
         tokenizator: Tokenizator,
         historyOfPaths: MutableList<String>,
     ): MutableList<Task> {
@@ -21,11 +17,11 @@ class ReaderOfScripts : CreateTask {
                 while (true) {
                     if (bufferedReader.ready()) {
                         val components = tokenizator.tokenizateCommand(bufferedReader.readLine())
-                        if (components[0].equals("execute_script")) {
-                            val extensionListOfTask = readScript(components[1], printer, tokenizator, historyOfPaths)
+                        if (components[0] == "execute_script") {
+                            val extensionListOfTask = readScript(components[1], tokenizator, historyOfPaths)
                             listOfTasks.addAll(extensionListOfTask)
                         } else {
-                            listOfTasks.add(createTask(components))
+                            listOfTasks.add(Task(components))
                         }
                     } else {
                         break
@@ -33,17 +29,14 @@ class ReaderOfScripts : CreateTask {
                 }
                 return listOfTasks
             } else {
-                printer.printHint("Данный файл был использован ${path}")
+                println("Данный файл был использован ${path}")
                 return mutableListOf()
             }
         } catch (e: Exception) {
-            printer.printHint("Problem with script")
+            println("Problem with script")
             return mutableListOf()
         }
     }
 
-    override fun createTask(describe: MutableList<String>): Task {
-        return Task(describe)
-    }
 
 }

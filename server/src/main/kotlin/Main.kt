@@ -1,5 +1,4 @@
 import Collections.Collection
-import Exceptions.FilePathException
 import StudyGroupInformation.StudyGroup
 import WorkModuls.CreateCollection
 import WorkModuls.ExecuteActionsWithRead

@@ -10,11 +10,11 @@ import java.io.Serializable
  */
 data class Answer(
     var checkError: Boolean = true,
-    var nameError: String = "Command do not exist",
+    var nameError: String = "Command does not exist",
     var result: String = "Command exception: ",
-): Serializable {
+) : Serializable {
 
-    val listOfNewCommand= mutableListOf<String>()
+    val listOfNewCommand = mutableListOf<String>()
 
     init {
         if (checkError) {
@@ -41,7 +41,7 @@ data class Answer(
         return result
     }
 
-    fun setNewCommands(list: List<String>){
+    fun setNewCommands(list: List<String>) {
         listOfNewCommand.addAll(list)
     }
 }

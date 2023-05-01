@@ -40,8 +40,9 @@ tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
     kotlinOptions.jvmTarget = "17"
 }
 tasks.withType<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar> {
-    archiveFileName.set("/home/roman/Client2.jar")
+    archiveFileName.set("/home/roman/Client.jar")
 }
+
 tasks.withType<Test> {
     useJUnitPlatform()
 }

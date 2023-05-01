@@ -2,12 +2,10 @@ package Commands
 
 import Collections.ActionsWithCollection
 import Collections.Collection
-import Exceptions.CommandException
 import StudyGroupInformation.StudyGroup
 import WorkModuls.Answer
 import WorkModuls.WorkWithAnswer
 import java.util.*
-import java.util.stream.Collectors
 
 /**
  * Класс команды, которая удаляет объект из коллекции по его ключу

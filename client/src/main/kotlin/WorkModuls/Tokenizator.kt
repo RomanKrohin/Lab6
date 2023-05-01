@@ -4,7 +4,7 @@ package WorkModuls
 /**
  * Класс для токенизации команд
  */
-class Tokenizator : ChangeLine {
+class Tokenizator{
 
     /**
      * Метод для токенизации команд
@@ -14,14 +14,6 @@ class Tokenizator : ChangeLine {
      * @return MutableList<String>
      */
     fun tokenizateCommand(command: String): MutableList<String> {
-        val commandComponent = returnCommandComponents(command)
-        return commandComponent
-
-    }
-
-    override fun returnCommandComponents(
-        command: String,
-    ): MutableList<String> {
         val commandComponent1 = command.split(" ").toMutableList()
         val commandComponent2: MutableList<String> = listOf<String>().toMutableList()
         for (i in commandComponent1) {
@@ -33,6 +25,7 @@ class Tokenizator : ChangeLine {
             commandComponent2.removeAt(2)
         }
         return commandComponent2
+
     }
 
 

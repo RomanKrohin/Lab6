@@ -2,7 +2,6 @@ package WorkModuls
 
 import Collections.ActionsWithCollection
 import Collections.Collection
-import Exceptions.ReadFileException
 import Server
 import StudyGroupInformation.StudyGroup
 import com.charleskorn.kaml.Yaml

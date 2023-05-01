@@ -7,60 +7,54 @@ import java.net.InetSocketAddress
 import java.nio.channels.SocketChannel
 import kotlin.system.exitProcess
 
-class Client : WorkWithPrinter, WorkWithAsker {
+class Client {
 
     val listOfNewCommands= mutableListOf<String>()
 
-    fun startConnection(): SocketChannel {
-
-        val printer = createPrinter()
+    fun connection(): SocketChannel {
         return try {
             val clientSocket = SocketChannel.open()
             clientSocket.socket().connect(InetSocketAddress("localhost", 8000))
             clientSocket
-        } catch (e: Exception) {
-            printer.printHint("Bad connection")
+        } catch (e: RuntimeException) {
+            println("Bad connection")
             SocketChannel.open(InetSocketAddress("localhost", 8000))
             throw e
         }
     }
 
-    fun handlerOfOutputStream(task: Task) {
-        val printer = createPrinter()
+    fun outputStreamHandler(task: Task) {
         try {
-            val clientSocket = startConnection()
+            val clientSocket = connection()
             if (clientSocket.isConnected) {
                 val objectOutputStream = ObjectOutputStream(clientSocket.socket().getOutputStream())
                 objectOutputStream.writeObject(task)
-                handlerOfInputSteam(clientSocket, task)
-                objectOutputStream.close()
+                inputSteamHandler(clientSocket, task)
             }
         } catch (e: Exception) {
-            printer.printHint("Bad connection")
+            println("Bad output")
         }
     }
 
-    fun handlerOfInputSteam(clientSocket: SocketChannel, task: Task) {
-        val asker = createAsker()
-        val printer = createPrinter()
+    fun inputSteamHandler(clientSocket: SocketChannel, task: Task) {
+        val asker = Asker()
         val objectInputStream = ObjectInputStream(clientSocket.socket().getInputStream())
         val answer = objectInputStream.readObject() as Answer
-        if (answer.getAnswer().equals("/exit/")) {
+        if (answer.getAnswer() == "/exit/") {
             exitProcess(0)
         }
-        if (answer.getAnswer().equals("/id/")) {
-            printer.printHint("Enter new ID")
+        if (answer.getAnswer() == "/id/") {
+            println("Enter new ID")
             task.describe.add(asker.askLong().toString())
-            handlerOfOutputStream(task)
+            outputStreamHandler(task)
         }
-        if (answer.getAnswer().equals("/insert/")) {
+        if (answer.getAnswer() == "/insert/") {
             task.studyGroup = asker.askStudyGroup()
-            handlerOfOutputStream(task)
+            outputStreamHandler(task)
         } else {
             listOfNewCommands.addAll(answer.listOfNewCommand)
-            printer.print(answer)
+            println(answer.getAnswer())
         }
-        objectInputStream.close()
         clientSocket.close()
     }
 
@@ -70,13 +64,6 @@ class Client : WorkWithPrinter, WorkWithAsker {
 
     fun resetNewCommands(){
         listOfNewCommands.clear()
-    }
-    override fun createPrinter(): Printer {
-        return Printer()
-    }
-
-    override fun createAsker(): Asker {
-        return Asker()
     }
 
 
