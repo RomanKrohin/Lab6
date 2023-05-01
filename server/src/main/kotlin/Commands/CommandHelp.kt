@@ -1,13 +1,12 @@
 package Commands
 
 import WorkModuls.Answer
-import WorkModuls.WorkWithAnswer
 import java.lang.RuntimeException
 
 /**
  * Класс команды, которая выводит список доступных команд
  */
-class CommandHelp : Command(), WorkWithAnswer {
+class CommandHelp : Command() {
 
     /**
      *  Метод работы команды
@@ -15,9 +14,10 @@ class CommandHelp : Command(), WorkWithAnswer {
      *  @param key
      */
     override fun commandDo(key: String): Answer {
+        val answer= Answer()
         try {
-            val answer = createReversedAnswer()
-            answer.setterResult(
+
+            answer.result=(
                 "help : вывести справку по доступным командам\n" +
                         "info : вывести в стандартный поток вывода информацию о коллекции (тип, дата инициализации, количество элементов и т.д.)\n" +
                         "show : вывести в стандартный поток вывода все элементы коллекции в строковом представлении\n" +
@@ -38,16 +38,9 @@ class CommandHelp : Command(), WorkWithAnswer {
             )
             return answer
         } catch (e: RuntimeException) {
-            return createAnswer()
+            answer.result="Command exception"
+            return answer
         }
-    }
-
-    override fun createAnswer(): Answer {
-        return Answer(nameError = "Help")
-    }
-
-    override fun createReversedAnswer(): Answer {
-        return Answer(false)
     }
 
 }

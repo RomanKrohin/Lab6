@@ -1,7 +1,7 @@
 import Collections.Collection
 import StudyGroupInformation.StudyGroup
 import WorkModuls.Answer
-import WorkModuls.Reader
+import WorkModuls.ExecuterOfCommands
 import WorkModuls.Task
 import java.io.BufferedReader
 import java.io.InputStreamReader
@@ -16,7 +16,7 @@ import kotlin.system.exitProcess
 
 class Server(){
 
-    val reader = Reader()
+    val reader = ExecuterOfCommands()
     val logger= Logger.getLogger("logger")
 
     fun startSever(collection: Collection<String, StudyGroup>, path: String) {
@@ -50,7 +50,6 @@ class Server(){
             val objectInputStream = ObjectInputStream(clientSocketChannel.socket().getInputStream())
             val task = objectInputStream.readObject() as Task
             handlerOfOutput(clientSocketChannel, reader.reader(collection, path, task.describe, task, task.listOfCommands))
-            objectInputStream.close()
         } catch (e: Exception) {
             logger.log(Level.SEVERE, "Ошибка получения информации")
         }
@@ -61,7 +60,6 @@ class Server(){
         try {
             val objectOutputStream = ObjectOutputStream(clientSocketChannel.socket().getOutputStream())
             objectOutputStream.writeObject(answer)
-            objectOutputStream.close()
         } catch (e: Exception) {
             logger.log(Level.SEVERE, "Ошибка передачи информации")
         }

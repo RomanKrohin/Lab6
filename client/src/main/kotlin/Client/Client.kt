@@ -40,20 +40,20 @@ class Client {
         val asker = Asker()
         val objectInputStream = ObjectInputStream(clientSocket.socket().getInputStream())
         val answer = objectInputStream.readObject() as Answer
-        if (answer.getAnswer() == "/exit/") {
+        if (answer.result == "/exit/") {
             exitProcess(0)
         }
-        if (answer.getAnswer() == "/id/") {
+        if (answer.result == "/id/") {
             println("Enter new ID")
             task.describe.add(asker.askLong().toString())
             outputStreamHandler(task)
         }
-        if (answer.getAnswer() == "/insert/") {
+        if (answer.result == "/insert/") {
             task.studyGroup = asker.askStudyGroup()
             outputStreamHandler(task)
         } else {
             listOfNewCommands.addAll(answer.listOfNewCommand)
-            println(answer.getAnswer())
+            println(answer.result)
         }
         clientSocket.close()
     }

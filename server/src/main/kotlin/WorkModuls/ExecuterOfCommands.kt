@@ -3,15 +3,13 @@ package WorkModuls
 import Collections.Collection
 import Commands.WorkWithHistory
 import StudyGroupInformation.StudyGroup
-import java.io.PrintWriter
-import java.nio.channels.SocketChannel
 import java.util.logging.Level
 import java.util.logging.Logger
 
 /**
  * Класс для чтения, выборки и вывода результатов команд
  */
-class Reader : WorkWithHistory {
+class ExecuterOfCommands : WorkWithHistory {
 
     private val history = listOf<String>().toMutableList()
     private val pathsForExecuteScripts = listOf<String>().toMutableList()

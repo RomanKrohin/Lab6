@@ -3,7 +3,6 @@ package Commands
 import Collections.Collection
 import StudyGroupInformation.StudyGroup
 import WorkModuls.Answer
-import WorkModuls.WorkWithAnswer
 import com.charleskorn.kaml.Yaml
 import kotlinx.serialization.encodeToString
 import java.lang.RuntimeException
@@ -13,7 +12,7 @@ import java.util.stream.Collectors
 /**
  * Класс команды, которая выводит объекты значение поля group admin меньше чем у заданного
  */
-class CommandCountLessThanAdmin(workCollection: Collection<String, StudyGroup>) : Command(), WorkWithAnswer {
+class CommandCountLessThanAdmin(workCollection: Collection<String, StudyGroup>) : Command(){
     var collection: Collection<String, StudyGroup>
 
     init {
@@ -26,23 +25,16 @@ class CommandCountLessThanAdmin(workCollection: Collection<String, StudyGroup>) 
      *  @param key
      */
     override fun commandDo(key: String): Answer {
-        try {
-            val answer = createReversedAnswer()
+        val answer = Answer()
+        return try {
             collection.collection.values.stream().collect(Collectors.toList())
                 .filter { it -> it.getAdmin().hashCode() < collection.collection.get(key).hashCode() }
-                .forEach { answer.setterResult(answer.getAnswer() + Yaml.default.encodeToString(it)) }
-            return answer
+                .forEach { answer.result+"\n"+Yaml.default.encodeToString(it) }
+            answer
         } catch (e: RuntimeException) {
-            return createAnswer()
+            answer.result="Command exception"
+            answer
         }
-    }
-
-    override fun createAnswer(): Answer {
-        return Answer(nameError = "Count less then admin")
-    }
-
-    override fun createReversedAnswer(): Answer {
-        return Answer(false)
     }
 
 }

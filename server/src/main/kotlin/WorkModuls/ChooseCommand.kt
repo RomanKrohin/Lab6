@@ -21,7 +21,7 @@ class ChooseCommand(
     pathsForExecuteScripts: MutableList<String>,
     pathOfFile: String,
     task: Task,
-) : CreateCommand, WorkWithAnswer, WorkWithCommandExceptionAnswer {
+) : CreateCommand {
     private val listOfPaths = pathsForExecuteScripts
     private var listOfCommand = createCommands(collection, history, listOfPaths, pathOfFile, task)
     private val workHistory = history
@@ -51,7 +51,7 @@ class ChooseCommand(
                 listOfCommand.keys.stream().collect(Collectors.toList()).filter { !listOfOldCommands.contains(it) })
             return answer
         }
-        return createCommandExceptionAnswer(commandComponent[0])
+        return Answer(commandComponent[0])
     }
 
     override fun createCommands(
@@ -80,17 +80,4 @@ class ChooseCommand(
         )
     }
 
-    override fun createAnswer(): Answer {
-        return Answer()
-    }
-
-    override fun createReversedAnswer(): Answer {
-        return Answer(false)
-    }
-
-    override fun createCommandExceptionAnswer(nameCommand: String): Answer {
-        val answer = createAnswer()
-        answer.nameError += ": ${nameCommand}"
-        return answer
-    }
 }

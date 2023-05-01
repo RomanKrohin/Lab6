@@ -1,34 +1,27 @@
 package Commands
 
 import WorkModuls.Answer
-import WorkModuls.WorkWithAnswer
 import java.lang.RuntimeException
 
 /**
  * Класс команды, которая заканчивает работу приложения
  */
-class CommandExit : Command(), WorkWithAnswer {
+class CommandExit : Command() {
     /**
      *  Метод работы команды
      *  @param collection
      *  @param key
      */
     override fun commandDo(key: String): Answer {
+        val answer= Answer()
         try {
-            val answer= createAnswer()
-            answer.setterResult("/exit/")
+            answer.result="/exit/"
             return answer
         } catch (e: RuntimeException) {
-            return createAnswer()
+            answer.result="Command exception"
+            return answer
         }
     }
 
-    override fun createAnswer(): Answer {
-        return Answer(nameError = "Exit")
-    }
-
-    override fun createReversedAnswer(): Answer {
-        return Answer(false)
-    }
 
 }

@@ -9,14 +9,14 @@ import java.lang.RuntimeException
  */
 fun main() {
     try {
-        val executer: Executer = Executer("/home/roman/test.yaml")
+        val executer: ExecuterReadFile = ExecuterReadFile("/home/roman/test.yaml")
     } catch (e: RuntimeException) {
         throw e
     }
 
 }
 
-class Executer(path: String){
+class ExecuterReadFile(path: String){
     /**
      * Класс инициализатор работы
      * @param path

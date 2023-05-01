@@ -9,37 +9,10 @@ import java.io.Serializable
  * @param result
  */
 data class Answer(
-    var checkError: Boolean = true,
-    var nameError: String = "Command do not exist",
-    var result: String = "Command exception: ",
+    var result: String = "Success\n----------\n",
 ): Serializable {
 
     val listOfNewCommand= mutableListOf<String>()
-
-    init {
-        if (checkError) {
-            result += nameError
-        }
-        if (!checkError) {
-            result = "Success\n----------\n"
-        }
-    }
-
-    /**
-     * Метод установки результата
-     * @param resultCommand
-     */
-    fun setterResult(resultCommand: String) {
-        result = resultCommand
-    }
-
-    /**
-     * Метод выдачи ответа
-     * @return String
-     */
-    fun getAnswer(): String {
-        return result
-    }
 
     fun setNewCommands(list: List<String>){
         listOfNewCommand.addAll(list)

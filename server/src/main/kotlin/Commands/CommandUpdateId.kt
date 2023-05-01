@@ -9,8 +9,7 @@ import java.util.stream.Collectors
 /**
  * Класс команды, которая обновляет id объекта коллекции по его ключу
  */
-class CommandUpdateId(workCollection: Collection<String, StudyGroup>) : Command(),
-    WorkWithAnswer {
+class CommandUpdateId(workCollection: Collection<String, StudyGroup>) : Command() {
     var collection: Collection<String, StudyGroup>
 
     init {
@@ -23,29 +22,21 @@ class CommandUpdateId(workCollection: Collection<String, StudyGroup>) : Command(
      *  @param key
      */
     override fun commandDo(key: String): Answer {
-        try {
+        return try {
+            val answer= Answer()
             val components = key.split(" ")
             if (components.size == 2) {
-                val answer = createReversedAnswer()
                 collection.collection.values.stream().collect(Collectors.toList())
                     .filter { it -> it.getId() == components[0].toLong() }.forEach { it.setId(components[1].toLong()) }
-                return answer
-            }
-            else {
-                val answer = createReversedAnswer()
-                answer.setterResult("/id/")
-                return answer
+                answer
+            } else {
+                answer.result=("/id/")
+                answer
             }
         } catch (e: RuntimeException) {
-            return createAnswer()
+            val answer= Answer()
+            answer
         }
     }
 
-    override fun createAnswer(): Answer {
-        return Answer(nameError = "Update id")
-    }
-
-    override fun createReversedAnswer(): Answer {
-        return Answer(false)
-    }
 }

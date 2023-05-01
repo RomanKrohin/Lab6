@@ -3,7 +3,6 @@ package Commands
 import Collections.Collection
 import StudyGroupInformation.StudyGroup
 import WorkModuls.Answer
-import WorkModuls.WorkWithAnswer
 import com.charleskorn.kaml.Yaml
 import kotlinx.serialization.encodeToString
 import java.io.FileOutputStream
@@ -13,7 +12,7 @@ import java.io.Writer
 /**
  * Класс команды, которая очищает файл и пишет, переводит объекты, сохраненные в коллекции, в строчный формат и записывает их в файл
  */
-class CommandSave(workCollection: Collections.Collection<String, StudyGroup>): Command(), WorkWithAnswer {
+class CommandSave(workCollection: Collection<String, StudyGroup>): Command(){
     var collection: Collection<String, StudyGroup>
     init {
         collection=workCollection
@@ -25,25 +24,18 @@ class CommandSave(workCollection: Collections.Collection<String, StudyGroup>): C
      *  @param key
      */
     override fun commandDo(key: String): Answer {
-        try {
-            val answer= createReversedAnswer()
+        val answer= Answer()
+        return try {
             val outputStream = FileOutputStream(key)
             val writer: Writer = OutputStreamWriter(outputStream)
             writer.write(Yaml.default.encodeToString(collection.collection.toMap()))
             writer.close()
-            return answer
-        }
-        catch (e: Exception){
-            return createAnswer()
+            answer
+        } catch (e: Exception){
+            answer.result="Command exception"
+            answer
         }
     }
 
-    override fun createAnswer(): Answer {
-        return Answer(nameError = "Save")
-    }
-
-    override fun createReversedAnswer(): Answer {
-        return Answer(false)
-    }
 
 }

@@ -3,14 +3,13 @@ package Commands
 import Collections.Collection
 import StudyGroupInformation.StudyGroup
 import WorkModuls.Answer
-import WorkModuls.WorkWithAnswer
 import java.lang.RuntimeException
 import java.util.stream.Collectors
 
 /**
  * Класс команды очищающая коллекцию
  */
-class CommandClear(workCollection: Collection<String, StudyGroup>) : Command(), WorkWithAnswer {
+class CommandClear(workCollection: Collection<String, StudyGroup>) : Command() {
     var collection: Collection<String, StudyGroup>
 
     init {
@@ -23,21 +22,15 @@ class CommandClear(workCollection: Collection<String, StudyGroup>) : Command(), 
      *  @param key
      */
     override fun commandDo(key: String): Answer {
-        try {
-            val answer = createReversedAnswer()
+        val answer= Answer()
+        return try {
             collection.collection.keys.stream().collect(Collectors.toList()).forEach(collection.collection::remove)
-            return answer
+            answer
         } catch (e: RuntimeException) {
-            throw e
+            answer.result="Command exception"
+            answer
         }
     }
 
 
-    override fun createAnswer(): Answer {
-        return Answer(nameError = "Clear")
-    }
-
-    override fun createReversedAnswer(): Answer {
-        return Answer(false)
-    }
 }

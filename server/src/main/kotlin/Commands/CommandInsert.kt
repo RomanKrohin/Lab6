@@ -8,7 +8,7 @@ import java.lang.RuntimeException
 /**
  * Класс команды, которая добавляет объект по его ключу
  */
-class CommandInsert(workCollection: Collection<String, StudyGroup>, workTask: Task): Command(), WorkWithAnswer {
+class CommandInsert(workCollection: Collection<String, StudyGroup>, workTask: Task): Command(){
     var collection: Collection<String, StudyGroup>
     var task: Task
     init {
@@ -23,9 +23,9 @@ class CommandInsert(workCollection: Collection<String, StudyGroup>, workTask: Ta
      *  @param key
      */
     override fun commandDo(key: String): Answer {
+        val answer= Answer()
         try {
             if (task.studyGroup!=null){
-                val answer= createReversedAnswer()
                 val listOfId = mutableListOf<Long>(0)
                 for (i in collection.collection.values){
                     listOfId.add(i.getId())
@@ -37,23 +37,15 @@ class CommandInsert(workCollection: Collection<String, StudyGroup>, workTask: Ta
                 return answer
             }
             else{
-                val answer= createReversedAnswer()
-                answer.setterResult("/insert/")
+                answer.result=("/insert/")
                 return answer
             }
         }
         catch (e: RuntimeException){
-            return createAnswer()
+            answer.result="Command exception"
+            return answer
         }
     }
 
-
-    override fun createAnswer(): Answer {
-        return Answer(nameError = "Insert")
-    }
-
-    override fun createReversedAnswer(): Answer {
-        return Answer(false)
-    }
 
 }
