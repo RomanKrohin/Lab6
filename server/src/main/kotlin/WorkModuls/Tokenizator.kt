@@ -1,11 +1,9 @@
 package WorkModuls
 
-import Commands.ChangeLine
-
 /**
  * Класс для токенизации команд
  */
-class Tokenizator : ChangeLine {
+class Tokenizator {
 
     private val history = listOf<String>().toMutableList()
 
@@ -17,25 +15,15 @@ class Tokenizator : ChangeLine {
      * @return MutableList<String>
      */
     fun tokenizateCommand(command: MutableList<String>, path: String, history: MutableList<String>): MutableList<String> {
-        val commandComponent = returnCommandComponents(command, path, history)
-        return commandComponent
-
-    }
-
-    override fun returnCommandComponents(
-        command: MutableList<String>,
-        path: String,
-        history: MutableList<String>,
-    ): MutableList<String> {
         val commandComponent1 = command
         val commandComponent2: MutableList<String> = listOf<String>().toMutableList()
         for (i in commandComponent1) {
             if (!(i.equals(""))) commandComponent2.add(i)
         }
-        if (commandComponent2[0].equals("history")) {
+        if (commandComponent2[0] == "history") {
             commandComponent2.add(history.toString())
         }
-        if (commandComponent2[0].equals("save")) {
+        if (commandComponent2[0] == "save") {
             commandComponent2.add(path)
         }
         if (commandComponent2.size == 3 && commandComponent2[0]!="update id") {
@@ -51,7 +39,6 @@ class Tokenizator : ChangeLine {
             commandComponent2.add("")
         }
         return commandComponent2
+
     }
-
-
 }

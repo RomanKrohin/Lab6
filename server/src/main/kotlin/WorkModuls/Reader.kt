@@ -11,7 +11,7 @@ import java.util.logging.Logger
 /**
  * Класс для чтения, выборки и вывода результатов команд
  */
-class Reader : WorkWithTokenizator, WorkWithChooseCommand, WorkWithHistory {
+class Reader : WorkWithHistory {
 
     private val history = listOf<String>().toMutableList()
     private val pathsForExecuteScripts = listOf<String>().toMutableList()
@@ -31,26 +31,12 @@ class Reader : WorkWithTokenizator, WorkWithChooseCommand, WorkWithHistory {
         listOfOldCommand: MutableList<String>
     ): Answer {
         logger.log(Level.INFO, "Чтение команды")
-        val tokens = createTokenizator()
-        val chooseCommand = createChooseCommand(collection, history, pathsForExecuteScripts, path, task)
+        val tokens = Tokenizator()
+        val chooseCommand = ChooseCommand(collection, history, pathsForExecuteScripts, path, task)
         workWithArrayHistory(command)
         val commandComponents = tokens.tokenizateCommand(command, path, history)
         val answer = chooseCommand.chooseCoomand(commandComponents, listOfOldCommand)
         return answer
-    }
-
-    override fun createTokenizator(): Tokenizator {
-        return Tokenizator()
-    }
-
-    override fun createChooseCommand(
-        collection: Collection<String, StudyGroup>,
-        history: MutableList<String>,
-        pathsForExecuteScripts: MutableList<String>,
-        pathOfFile: String,
-        task: Task,
-    ): ChooseCommand {
-        return ChooseCommand(collection, history, pathsForExecuteScripts, pathOfFile, task)
     }
 
     override fun workWithArrayHistory(coomand: MutableList<String>) {

@@ -3,24 +3,20 @@ import StudyGroupInformation.StudyGroup
 import WorkModuls.Answer
 import WorkModuls.Reader
 import WorkModuls.Task
-import WorkModuls.WorkWithReader
 import java.io.BufferedReader
-import java.io.InputStream
 import java.io.InputStreamReader
 import java.io.ObjectInputStream
 import java.io.ObjectOutputStream
 import java.net.InetSocketAddress
 import java.nio.channels.ServerSocketChannel
 import java.nio.channels.SocketChannel
-import java.sql.Connection
-import java.util.Scanner
 import java.util.logging.Level
 import java.util.logging.Logger
 import kotlin.system.exitProcess
 
-class Server() : WorkWithReader {
+class Server(){
 
-    val reader = createReader()
+    val reader = Reader()
     val logger= Logger.getLogger("logger")
 
     fun startSever(collection: Collection<String, StudyGroup>, path: String) {
@@ -71,7 +67,4 @@ class Server() : WorkWithReader {
         }
     }
 
-    override fun createReader(): Reader {
-        return Reader()
-    }
 }

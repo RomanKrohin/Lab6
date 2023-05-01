@@ -6,10 +6,10 @@ import StudyGroupInformation.StudyGroup
 /**
  * Класс начала выборки команды
  */
-interface StartChooseCommand {
+interface WorkWithServer {
 
     /**
      * Метод инициализации выборки команды
      */
-    fun startServer(collection: Collection<String, StudyGroup>, path: String)
+    fun serverWork(collection: Collection<String, StudyGroup>, path: String)
 }

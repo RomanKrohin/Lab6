@@ -1,6 +1,5 @@
 package Commands
 
-import Collections.ActionsWithCollection
 import Collections.Collection
 import StudyGroupInformation.StudyGroup
 import WorkModuls.*
@@ -9,7 +8,7 @@ import java.lang.RuntimeException
 /**
  * Класс команды, которая добавляет объект по его ключу
  */
-class CommandInsert(workCollection: Collection<String, StudyGroup>, workTask: Task): Command(), ActionsWithCollection, WorkWithAnswer {
+class CommandInsert(workCollection: Collection<String, StudyGroup>, workTask: Task): Command(), WorkWithAnswer {
     var collection: Collection<String, StudyGroup>
     var task: Task
     init {
@@ -33,7 +32,7 @@ class CommandInsert(workCollection: Collection<String, StudyGroup>, workTask: Ta
                 }
                 task.studyGroup?.let {
                     it.setId(listOfId.max()+1)
-                    executeAdd(collection, it, key)
+                    collection.add(it, key)
                 }
                 return answer
             }
@@ -47,15 +46,6 @@ class CommandInsert(workCollection: Collection<String, StudyGroup>, workTask: Ta
             return createAnswer()
         }
     }
-
-    override fun executeAdd(collection: Collection<String, StudyGroup>, studyGroup: StudyGroup, key: String) {
-        collection.add(studyGroup, key)
-    }
-
-    override fun executeRemove(collection: Collection<String, StudyGroup>, key: String) {
-        collection.remove(key)
-    }
-
 
 
     override fun createAnswer(): Answer {
