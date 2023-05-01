@@ -4,6 +4,7 @@ import Collections.Collection
 import StudyGroupInformation.StudyGroup
 import WorkModuls.Answer
 import WorkModuls.WorkWithAnswer
+import java.lang.RuntimeException
 
 /**
  * Класс команды, который выводит последние 12 введенных команд
@@ -25,7 +26,7 @@ class CommandHistory(workCollection: Collection<String, StudyGroup>) : Command()
             val answer = createReversedAnswer()
             answer.setterResult(key)
             return answer
-        } catch (e: CommandException) {
+        } catch (e: RuntimeException) {
             return createAnswer()
         }
     }

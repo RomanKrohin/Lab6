@@ -4,6 +4,7 @@ import Collections.ActionsWithCollection
 import Collections.Collection
 import StudyGroupInformation.StudyGroup
 import WorkModuls.*
+import java.lang.RuntimeException
 
 /**
  * Класс команды, которая добавляет объект по его ключу
@@ -42,7 +43,7 @@ class CommandInsert(workCollection: Collection<String, StudyGroup>, workTask: Ta
                 return answer
             }
         }
-        catch (e: CommandException){
+        catch (e: RuntimeException){
             return createAnswer()
         }
     }

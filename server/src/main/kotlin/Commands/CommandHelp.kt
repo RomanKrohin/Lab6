@@ -2,6 +2,7 @@ package Commands
 
 import WorkModuls.Answer
 import WorkModuls.WorkWithAnswer
+import java.lang.RuntimeException
 
 /**
  * Класс команды, которая выводит список доступных команд
@@ -36,7 +37,7 @@ class CommandHelp : Command(), WorkWithAnswer {
                         "count_less_than_group_admin : вывести в терминал текстовый вид объекта, значение поля group admin которого наибольшее\n"
             )
             return answer
-        } catch (e: CommandException) {
+        } catch (e: RuntimeException) {
             return createAnswer()
         }
     }

@@ -4,6 +4,7 @@ import Collections.Collection
 import StudyGroupInformation.StudyGroup
 import WorkModuls.Answer
 import WorkModuls.WorkWithAnswer
+import java.lang.RuntimeException
 
 /**
  * Класс команды, которая выводит информацию о коллекции
@@ -28,7 +29,7 @@ class CommandInfo(workCollection: Collection<String, StudyGroup>) : Command(), W
             val answer = createReversedAnswer()
             answer.setterResult("Collection: HashTable\n" + "Size " + collection.collection.size + "\n" + java.time.LocalTime.now())
             return answer
-        } catch (e: CommandException) {
+        } catch (e: RuntimeException) {
             return createAnswer()
         }
     }

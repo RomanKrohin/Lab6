@@ -4,6 +4,7 @@ import Collections.Collection
 import StudyGroupInformation.StudyGroup
 import WorkModuls.Answer
 import WorkModuls.WorkWithAnswer
+import java.lang.RuntimeException
 import java.util.*
 import java.util.stream.Collectors
 
@@ -31,7 +32,7 @@ class CommandDeleteByMaxKey(workCollection: Collection<String, StudyGroup>) : Co
                     .filter { it -> it.hashCode() > key.uppercase().hashCode() }.forEach(collection.collection::remove)
             }
             return answer
-        } catch (e: CommandException) {
+        } catch (e: RuntimeException) {
             return createAnswer()
         }
     }

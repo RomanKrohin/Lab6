@@ -5,6 +5,7 @@ import Collections.Collection
 import StudyGroupInformation.StudyGroup
 import WorkModuls.Answer
 import WorkModuls.WorkWithAnswer
+import java.lang.RuntimeException
 import java.util.*
 
 /**
@@ -28,7 +29,7 @@ class CommandRemove(workCollection: Collection<String, StudyGroup>) : Command(),
             var answer = createReversedAnswer()
             executeRemove(collection, key.uppercase(Locale.getDefault()))
             return answer
-        } catch (e: CommandException) {
+        } catch (e: RuntimeException) {
             return createAnswer()
         }
     }

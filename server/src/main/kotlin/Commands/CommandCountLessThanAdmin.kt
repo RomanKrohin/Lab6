@@ -6,6 +6,7 @@ import WorkModuls.Answer
 import WorkModuls.WorkWithAnswer
 import com.charleskorn.kaml.Yaml
 import kotlinx.serialization.encodeToString
+import java.lang.RuntimeException
 import java.util.*
 import java.util.stream.Collectors
 
@@ -31,7 +32,7 @@ class CommandCountLessThanAdmin(workCollection: Collection<String, StudyGroup>) 
                 .filter { it -> it.getAdmin().hashCode() < collection.collection.get(key).hashCode() }
                 .forEach { answer.setterResult(answer.getAnswer() + Yaml.default.encodeToString(it)) }
             return answer
-        } catch (e: CommandException) {
+        } catch (e: RuntimeException) {
             return createAnswer()
         }
     }

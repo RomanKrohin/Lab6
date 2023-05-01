@@ -4,6 +4,7 @@ import Collections.Collection
 import StudyGroupInformation.StudyGroup
 import WorkModuls.Answer
 import WorkModuls.WorkWithAnswer
+import java.lang.RuntimeException
 import java.util.stream.Collectors
 
 /**
@@ -26,7 +27,7 @@ class CommandClear(workCollection: Collection<String, StudyGroup>) : Command(), 
             val answer = createReversedAnswer()
             collection.collection.keys.stream().collect(Collectors.toList()).forEach(collection.collection::remove)
             return answer
-        } catch (e: CommandException) {
+        } catch (e: RuntimeException) {
             throw e
         }
     }

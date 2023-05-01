@@ -6,6 +6,7 @@ import WorkModuls.Answer
 import WorkModuls.WorkWithAnswer
 import com.charleskorn.kaml.Yaml
 import kotlinx.serialization.encodeToString
+import java.lang.RuntimeException
 
 /**
  * Класс команды, которая выводит объект, значение поля name которого наибольшее
@@ -28,7 +29,7 @@ class CommandMaxName(workCollection: Collections.Collection<String, StudyGroup>)
             val studyGroup = collection.collection.values.maxBy { it.getName() }
             answer.setterResult(Yaml.default.encodeToString(studyGroup))
             return answer
-        } catch (e: CommandException) {
+        } catch (e: RuntimeException) {
             return createAnswer()
         }
     }

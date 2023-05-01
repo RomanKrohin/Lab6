@@ -3,6 +3,7 @@ import StudyGroupInformation.StudyGroup
 import WorkModuls.CreateCollection
 import WorkModuls.ExecuteActionsWithRead
 import WorkModuls.ReadFile
+import java.lang.RuntimeException
 
 /**
  * Точка вхождения в программу
@@ -11,7 +12,7 @@ import WorkModuls.ReadFile
 fun main() {
     try {
         val executer: Executer = Executer("/home/roman/test.yaml")
-    } catch (e: FilePathException) {
+    } catch (e: RuntimeException) {
         throw e
     }
 

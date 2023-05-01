@@ -8,6 +8,7 @@ import com.charleskorn.kaml.Yaml
 import kotlinx.serialization.decodeFromString
 import java.io.BufferedReader
 import java.io.FileReader
+import java.lang.RuntimeException
 import java.util.logging.Level
 import java.util.logging.Logger
 
@@ -31,7 +32,7 @@ open class ReadFile(pathFile: String) : StartChooseCommand, CreateCheckModule, A
         logger.log(Level.INFO, "Чтение файла")
         val bufferedReader = BufferedReader(FileReader(path))
         try {
-            var line: String = ""
+            var line= ""
             while (true) {
                 if (bufferedReader.ready()) {
                     line += "\n" + bufferedReader.readLine()
@@ -53,7 +54,7 @@ open class ReadFile(pathFile: String) : StartChooseCommand, CreateCheckModule, A
                 }
             }
             startServer(collection, path)
-        } catch (e: ReadFileException) {
+        } catch (e: RuntimeException) {
             logger.log(Level.SEVERE, "Ошибка чтения")
         }
     }

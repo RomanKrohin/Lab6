@@ -3,6 +3,7 @@ package Commands
 import Collections.Collection
 import StudyGroupInformation.StudyGroup
 import WorkModuls.*
+import java.lang.RuntimeException
 import java.util.stream.Collectors
 
 /**
@@ -35,7 +36,7 @@ class CommandUpdateId(workCollection: Collection<String, StudyGroup>) : Command(
                 answer.setterResult("/id/")
                 return answer
             }
-        } catch (e: CommandException) {
+        } catch (e: RuntimeException) {
             return createAnswer()
         }
     }

@@ -4,6 +4,7 @@ import Collections.Collection
 import StudyGroupInformation.StudyGroup
 import WorkModuls.Answer
 import WorkModuls.WorkWithAnswer
+import java.lang.RuntimeException
 import java.util.stream.Collectors
 
 /**
@@ -28,7 +29,7 @@ class CommandPrintFieldDescendingAverageMark(workCollection: Collections.Collect
             answer.setterResult(collection.collection.values.stream().map { it -> it.getAverageMark() }
                 .collect(Collectors.toList()).sorted().reversed().toString())
             return answer
-        } catch (e: CommandException) {
+        } catch (e: RuntimeException) {
             return createAnswer()
         }
     }
