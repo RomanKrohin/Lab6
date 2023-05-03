@@ -37,24 +37,10 @@ class Client {
     }
 
     fun inputSteamHandler(clientSocket: SocketChannel, task: Task) {
-        val asker = Asker()
         val objectInputStream = ObjectInputStream(clientSocket.socket().getInputStream())
         val answer = objectInputStream.readObject() as Answer
-        if (answer.result == "/exit/") {
-            exitProcess(0)
-        }
-        if (answer.result == "/id/") {
-            println("Enter new ID")
-            task.describe.add(asker.askLong().toString())
-            outputStreamHandler(task)
-        }
-        if (answer.result == "/insert/") {
-            task.studyGroup = asker.askStudyGroup()
-            outputStreamHandler(task)
-        } else {
-            listOfNewCommands.addAll(answer.listOfNewCommand)
-            println(answer.result)
-        }
+        listOfNewCommands.addAll(answer.listOfNewCommand)
+        println(answer.result)
         clientSocket.close()
     }
 

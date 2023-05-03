@@ -23,18 +23,14 @@ class CommandUpdateId(workCollection: Collection<String, StudyGroup>) : Command(
      */
     override fun commandDo(key: String): Answer {
         return try {
-            val answer= Answer()
+            val answer = Answer()
             val components = key.split(" ")
-            if (components.size == 2) {
-                collection.collection.values.stream().collect(Collectors.toList())
-                    .filter { it -> it.getId() == components[0].toLong() }.forEach { it.setId(components[1].toLong()) }
-                answer
-            } else {
-                answer.result=("/id/")
-                answer
-            }
+            collection.collection.values.stream().collect(Collectors.toList())
+                .filter { it -> it.getId() == components[0].toLong() }.forEach { it.setId(components[1].toLong()) }
+            answer
+
         } catch (e: RuntimeException) {
-            val answer= Answer()
+            val answer = Answer()
             answer
         }
     }

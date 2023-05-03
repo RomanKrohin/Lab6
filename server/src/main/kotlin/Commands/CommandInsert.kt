@@ -24,26 +24,19 @@ class CommandInsert(workCollection: Collection<String, StudyGroup>, workTask: Ta
      */
     override fun commandDo(key: String): Answer {
         val answer= Answer()
-        try {
-            if (task.studyGroup!=null){
-                val listOfId = mutableListOf<Long>(0)
-                for (i in collection.collection.values){
-                    listOfId.add(i.getId())
-                }
-                task.studyGroup?.let {
-                    it.setId(listOfId.max()+1)
-                    collection.add(it, key)
-                }
-                return answer
+        return try {
+            val listOfId = mutableListOf<Long>(0)
+            for (i in collection.collection.values){
+                listOfId.add(i.getId())
             }
-            else{
-                answer.result=("/insert/")
-                return answer
+            task.studyGroup?.let {
+                it.setId(listOfId.max()+1)
+                collection.add(it, key)
             }
-        }
-        catch (e: RuntimeException){
+            answer
+        } catch (e: RuntimeException){
             answer.result="Command exception"
-            return answer
+            answer
         }
     }
 
