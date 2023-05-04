@@ -66,7 +66,6 @@ class ChooseCommand(
             "save" to CommandSave(collection),
             "history" to CommandHistory(collection),
             "help" to CommandHelp(),
-            "exit" to CommandExit(),
             "info" to CommandInfo(collection),
             "clear" to CommandClear(collection),
             "max_by_name" to CommandMaxName(collection),

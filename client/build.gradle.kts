@@ -17,6 +17,7 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:1.5.0")
     implementation("com.charleskorn.kaml:kaml:0.52.0")
     implementation("org.yaml:snakeyaml:2.0")
+    implementation("org.postgresql:postgresql:42.3.1")
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.2")
     testImplementation("org.junit.jupiter:junit-jupiter:5.8.1")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.9.2")

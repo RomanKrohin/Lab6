@@ -16,39 +16,7 @@ data class StudyGroup(
 
     private val localDateTime: LocalDateTime by lazy { java.time.LocalDateTime.now() }
     private var id: Long = 0
-    fun setId(_id: Long) {
-        id = _id
-    }
-
-    fun getId(): Long {
-        return id
-    }
-
-    fun getName(): String {
-        return name
-    }
-
-    fun getCoordinates(): Coordinates {
-        return coordinates
-    }
-
-    fun getStudentcount(): Long {
-        return studentCount
-    }
-
-    fun getShouldBeExpelled(): Int {
-        return shouldBeExpelled
-    }
-
-    fun getAverageMark(): Int {
-        return averageMark
-    }
-
-    fun getFormOfEducation(): FormOfEducation? {
-        return formOfEducation
-    }
-
-    fun getAdmin(): Person {
-        return groupAdmin
+    init {
+        localDateTime
     }
 }

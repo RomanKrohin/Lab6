@@ -9,12 +9,6 @@ data class Person(
     private val color: Color,
     private val country: Country,
 ) : Serializable {
-    fun getName(): String {
-        return name
-    }
 
-    fun getWeight(): Int {
-        return weight
-    }
 
 }

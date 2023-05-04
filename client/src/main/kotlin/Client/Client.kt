@@ -5,7 +5,6 @@ import java.io.ObjectInputStream
 import java.io.ObjectOutputStream
 import java.net.InetSocketAddress
 import java.nio.channels.SocketChannel
-import kotlin.system.exitProcess
 
 class Client {
 
@@ -29,14 +28,14 @@ class Client {
             if (clientSocket.isConnected) {
                 val objectOutputStream = ObjectOutputStream(clientSocket.socket().getOutputStream())
                 objectOutputStream.writeObject(task)
-                inputSteamHandler(clientSocket, task)
+                inputSteamHandler(clientSocket)
             }
         } catch (e: Exception) {
             println("Bad output")
         }
     }
 
-    fun inputSteamHandler(clientSocket: SocketChannel, task: Task) {
+    fun inputSteamHandler(clientSocket: SocketChannel) {
         val objectInputStream = ObjectInputStream(clientSocket.socket().getInputStream())
         val answer = objectInputStream.readObject() as Answer
         listOfNewCommands.addAll(answer.listOfNewCommand)
